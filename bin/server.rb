@@ -5,6 +5,7 @@ require 'json'
 require 'pry'
 require_relative '../config/router'
 require_relative '../lib/all'
+require_relative '../lib/task_list'
 
 module App
   # Place all data here inside of a method
