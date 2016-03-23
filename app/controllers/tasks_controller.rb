@@ -1,4 +1,4 @@
-class TweetsController < ApplicationController
+class TasksController < ApplicationController
   def index
     #f = File.read('app/views/test.html')
     #render f, status: "200 OK", as: "text/html"

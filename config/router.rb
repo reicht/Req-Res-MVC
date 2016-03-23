@@ -16,7 +16,12 @@ class Router
     #
     # Put your routes in this array using the get, post, put, delete methods below. (remember order matters)
     [
-      get('/tweets', TweetsController, :index),
+      delete('/users/:id', TasksController, :destroy),
+      put('/users/:id', TasksController, :update),
+      get('/tasks/:id', TasksController, :show),
+      get('/tasks', TasksController, :index),
+      post('/tasks', TasksController, :create),
+      get('/tweets', TweetsController, :index)
     ].find(&:itself)
   end
 
