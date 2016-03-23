@@ -1,17 +1,17 @@
 class TasksController < ApplicationController
+
+  def initialize(target)
+    @target=target
+  end
+
   def index
     render Task.new.all
   end
+
   def show
     user = find_user_by_id
-
     if user
-      if request[:format] == "json"
-        render user.to_json
-      else
-        @user = user
-        render_template 'users/show.html.erb'
-      end
+      render user.to_json
     else
       render_not_found
     end
@@ -54,7 +54,8 @@ class TasksController < ApplicationController
   private
 
   def find_user_by_id
-    TASK_LIST.find { |u| u.id == params[:id].to_i }
+    params = @target[:params]
+    TASK_LIST.find { |task|  task[:id] == params[:id].to_i}
   end
 
   def render_not_found

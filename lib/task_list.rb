@@ -1,4 +1,4 @@
-TASK_LIST = [{:first_name => "Greg",   :last_name => "Henry",    :age => 34, :id => 1},
+TASK_LIST = [ {:first_name => "Greg",   :last_name => "Henry",    :age => 34, :id => 1},
               {:first_name => "Mary",   :last_name => "Beth",     :age => 45, :id => 2},
               {:first_name => "Gina",   :last_name => "Sue",      :age => 66, :id => 3},
               {:first_name => "David",  :last_name => "Illheim",  :age => 12, :id => 4},
