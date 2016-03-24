@@ -50,6 +50,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def complete_task
+    @params["completed"] = "true"
+    update
+  end
+
   def destroy
     task = targetting
 
