@@ -2,50 +2,60 @@ class TasksController < ApplicationController
 
   def initialize(target)
     @target=target
+    @params = @target[:params]
   end
 
   def index
-    render Task.new.all
+    if @target[:format] == "json"
+      render $task_list.to_json
+    else
+    render_template 'tasks_list.html.erb'
+    end
   end
 
   def show
-    user = find_user_by_id
-    if user
-      render user.to_json
+    task = targetting
+    if task
+      if @target[:format] == "json"
+        render task.to_json
+      else
+        @task = task
+        render_template 'view_task.html.erb'
+      end
     else
       render_not_found
     end
   end
 
   def create
-    puts "Under construction"
+    $task_list << Task.new(@params["body"])
+    render({ message: "Successfully created new task!" }.to_json)
   end
 
   def update
-    user = find_user_by_id
+    task = targetting
 
-    if user
-      unless params["name"].nil? || params["name"].empty?
-        user.name = params["name"]
+    if task
+      unless @params["body"].nil? || @params["body"].empty?
+        task.body = @params["body"]
       end
 
-      unless params["age"].nil? || params["age"].empty?
-        user.age = params["age"]
+      unless @params["completed"].nil? || @params["completed"].empty?
+        task.completed = @params["completed"]
       end
 
-      # In rails you will need to call save here
-      render user.to_json, status: "200 OK"
+      render task.to_json, status: "200 OK"
     else
       render_not_found
     end
   end
 
   def destroy
-    user = find_user_by_id
+    task = targetting
 
-    if user
-      TASK_LIST.delete(user) # destroy it 🔥
-      render({ message: "Successfully Deleted User" }.to_json)
+    if task
+      $task_list.delete(task)
+      render({ message: "Successfully Deleted Task" }.to_json)
     else
       render_not_found
     end
@@ -53,9 +63,8 @@ class TasksController < ApplicationController
 
   private
 
-  def find_user_by_id
-    params = @target[:params]
-    TASK_LIST.find { |task|  task[:id] == params[:id].to_i}
+  def targetting
+    $task_list.find { |task|  task.id == @params[:id].to_i}
   end
 
   def render_not_found

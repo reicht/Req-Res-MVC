@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title> Task List </title>
+  </head>
+
+  <body>
+    <hr>
+    <h2>Items Left to Do</h2>
+    <hr>
+    <ol>
+      <% $task_list.each do |task|
+        if task.completed == "false"%>
+          <li><a href="http://localhost:3001/tasks/<%=task.id%>"><%=task.body%></a></li>
+        <%end
+      end%>
+    </ol>
+    <hr>
+    <hr>
+    <h2>Items Completed</h2>
+    <hr>
+    <ol>
+      <% $task_list.each do |task|
+        if task.completed == "true"%>
+          <li><a href="http://localhost:3001/tasks/<%=task.id%>"><%=task.body%></a></li>
+        <%end
+      end%>
+    </ol>
+    <hr>
+
+  </body>
+
+</html>

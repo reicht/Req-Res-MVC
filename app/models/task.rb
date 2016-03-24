@@ -1,23 +1,36 @@
 require 'json'
 
 class Task
-  attr_accessor :first_name, :last_name, :age, :id
+  attr_accessor :body, :completed, :id
 
-  def initialize
-
+  def initialize(body, id = -1)
+    if id == -1
+      @id = Task.get_id
+    else
+      @id = id
+    end
+    @body = body
+    @completed = "false"
   end
 
-  def all
-    TASK_LIST.to_json
-  end
-
-  def show(user)
-    user = TASK_LIST[target[:params][:id].to_i-1]
-    return user.to_json
+  def Task.setup
+    id = Task.get_id
+    new(BODY_LIST[id-1], id)
   end
 
   def not_found
     return "Not Found".to_json
   end
 
+  def Task.get_id
+    $given_ids += 1
+  end
+
+  def to_json(_ = nil)
+    {
+      id: id,
+      body: body,
+      completed: completed
+    }.to_json
+  end
 end

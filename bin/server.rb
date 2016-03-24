@@ -20,6 +20,12 @@ module App
   end
 end
 
+def establish_tasks
+  until $given_ids == 10
+    $task_list << Task.setup
+  end
+end
+establish_tasks
 system('clear')
 
 # Initialize a TCPServer object that will listen
